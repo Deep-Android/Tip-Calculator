@@ -3,15 +3,65 @@ package com.jmatharu.tipcalculator;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
+
+	EditText amount;
+	TextView textView;
+	SeekBar seekBarTip;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		initializeVariables();
+
+		seekBarTip.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+			int progressChanged = 0;
+
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				// TODO Auto-generated method stub
+				progressChanged = progress;
+			}
+
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+
+				// TODO Auto-generated method stub
+				Toast.makeText(getApplicationContext(), "seek bar progress: " + progressChanged,
+						Toast.LENGTH_SHORT).show();
+				String tipPercent = String.valueOf(progressChanged);
+				textView.setText(tipPercent);
+			}
+		});
+	}
+
+	private void initializeVariables() {
+		// TODO Auto-generated method stub
+		amount = (EditText) findViewById(R.id.editText1);
+		amount.setFilters(new InputFilter[] { new InputFilter.LengthFilter(6) });
+
+		seekBarTip = (SeekBar) findViewById(R.id.seekBar1);
+		seekBarTip.setMax(40);
+
+		textView = (TextView) findViewById(R.id.textView1);
+		
 	}
 
 	@Override
@@ -28,7 +78,7 @@ public class MainActivity extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
-			
+
 			return true;
 		} else if (id == R.id.about_me) {
 
