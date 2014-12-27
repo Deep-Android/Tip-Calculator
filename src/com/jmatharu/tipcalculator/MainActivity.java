@@ -10,13 +10,12 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
 	EditText amount;
-	TextView textView;
-	SeekBar seekBarTip;
+	TextView textView,textView1;
+	SeekBar seekBarTip, seekNumPeople;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +43,32 @@ public class MainActivity extends Activity {
 			public void onStopTrackingTouch(SeekBar seekBar) {
 
 				// TODO Auto-generated method stub
-				Toast.makeText(getApplicationContext(), "seek bar progress: " + progressChanged,
-						Toast.LENGTH_SHORT).show();
 				String tipPercent = String.valueOf(progressChanged);
-				textView.setText(tipPercent);
+				textView.setText("Tip % : " + tipPercent + " %");
+			}
+		});
+
+		seekNumPeople.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+			int progressChangedPeople = 0;
+
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				// TODO Auto-generated method stub
+				progressChangedPeople = progress;
+			}
+
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+				String person = String.valueOf(progressChangedPeople);
+				textView1.setText("Number Of People : " + person );
 			}
 		});
 	}
@@ -60,8 +81,15 @@ public class MainActivity extends Activity {
 		seekBarTip = (SeekBar) findViewById(R.id.seekBar1);
 		seekBarTip.setMax(40);
 
+		seekNumPeople = (SeekBar) findViewById(R.id.seekBar2);
+		seekNumPeople.setMax(20);
+
 		textView = (TextView) findViewById(R.id.textView1);
+		textView.setText("Tip % : 0 %");
 		
+		textView1 = (TextView) findViewById(R.id.textView2);
+		textView1.setText("Number Of People : 0");
+
 	}
 
 	@Override
