@@ -66,6 +66,7 @@
                 android:layout_below="@id/seekBar2"
                 android:layout_marginTop="30dp"
                 android:text="Calculate"
+                android:onClick="calculate"
                 android:textSize="17dp" />
 
             <TextView

@@ -4,17 +4,22 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
 	EditText amount;
-	TextView textView,textView1;
+	TextView textView, textView1, texViewTip, txtTotal;
 	SeekBar seekBarTip, seekNumPeople;
 
 	@Override
@@ -23,7 +28,19 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		initializeVariables();
+		seekBarTip.setOnTouchListener(new OnTouchListener() {
 
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+				if (TextUtils.isEmpty(amount.getText())) {
+					texViewTip.setText("Enter Bill Amount");
+					txtTotal.setText("Enter Bill Amount");
+				}
+
+				return false;
+			}
+		});
 		seekBarTip.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			int progressChanged = 0;
 
@@ -48,6 +65,22 @@ public class MainActivity extends Activity {
 			}
 		});
 
+		seekNumPeople.setOnTouchListener(new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+				if (TextUtils.isEmpty(amount.getText())) {
+					texViewTip.setText("Enter Bill Amount");
+					txtTotal.setText("Enter Bill Amount");
+				}else {
+					texViewTip.setText("");
+					txtTotal.setText("");
+				}
+
+				return false;
+			}
+		});
 		seekNumPeople.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			int progressChangedPeople = 0;
 
@@ -68,7 +101,7 @@ public class MainActivity extends Activity {
 			public void onStopTrackingTouch(SeekBar seekBar) {
 				// TODO Auto-generated method stub
 				String person = String.valueOf(progressChangedPeople);
-				textView1.setText("Number Of People : " + person );
+				textView1.setText("Number Of People : " + person);
 			}
 		});
 	}
@@ -86,9 +119,12 @@ public class MainActivity extends Activity {
 
 		textView = (TextView) findViewById(R.id.textView1);
 		textView.setText("Tip % : 0 %");
-		
+
 		textView1 = (TextView) findViewById(R.id.textView2);
 		textView1.setText("Number Of People : 0");
+
+		texViewTip = (TextView) findViewById(R.id.textView3);
+		txtTotal = (TextView) findViewById(R.id.textView4);
 
 	}
 
@@ -116,5 +152,12 @@ public class MainActivity extends Activity {
 			MainActivity.this.startActivity(activityIntent);
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	public void calculate(View view) {
+
+		if (TextUtils.isEmpty(amount.getText())) {
+			Toast.makeText(this, "sas", Toast.LENGTH_SHORT).show();
+		}
 	}
 }
