@@ -65,8 +65,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/seekBar2"
                 android:layout_marginTop="30dp"
-                android:text="Calculate"
                 android:onClick="calculate"
+                android:text="Calculate"
                 android:textSize="17dp" />
 
             <TextView
@@ -97,6 +97,13 @@
                 android:gravity="center"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true" />
         </RelativeLayout>
     </ScrollView>
 

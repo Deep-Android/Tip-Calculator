@@ -2,6 +2,7 @@ package com.jmatharu.tipcalculator;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -19,7 +20,8 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 
 	EditText amount;
-	TextView textView, textView1, texViewTip, txtTotal;
+
+	TextView textView, textView1, texViewTip, txtTotal, tempTip;
 	SeekBar seekBarTip, seekNumPeople;
 
 	@Override
@@ -28,6 +30,15 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		initializeVariables();
+
+		// Core Code
+
+		final String tipGetValue = tempTip.getText().toString();
+
+		// End Core Code
+
+		// Seekbar TIP
+
 		seekBarTip.setOnTouchListener(new OnTouchListener() {
 
 			@Override
@@ -36,6 +47,11 @@ public class MainActivity extends Activity {
 				if (TextUtils.isEmpty(amount.getText())) {
 					texViewTip.setText("Enter Bill Amount");
 					txtTotal.setText("Enter Bill Amount");
+					texViewTip.setTextColor(Color.RED);
+					txtTotal.setTextColor(Color.RED);
+				} else {
+					texViewTip.setText("");
+					txtTotal.setText("");
 				}
 
 				return false;
@@ -53,18 +69,69 @@ public class MainActivity extends Activity {
 			public void onProgressChanged(SeekBar seekBar, int progress,
 					boolean fromUser) {
 				// TODO Auto-generated method stub
+
+				amount = (EditText) findViewById(R.id.editText1);
+				String element = amount.getText().toString();
+				
+				int a = Character.getNumericValue(element.charAt(0));
+				int b = Character.getNumericValue(element.charAt(1));
+				int c = Character.getNumericValue(element.charAt(2));
+				int d = Character.getNumericValue(element.charAt(3));
+				int e = Character.getNumericValue(element.charAt(4));
+				int f = Character.getNumericValue(element.charAt(5));
+
+				for (int i = 0; i < element.length(); i++) {
+					System.out.println("x=" + a + b + c + d + e + f);
+
+				}
+
+				/*
+				 * while (count < element.length()) { a =
+				 * Character.getNumericValue(element.charAt(count)); count++; }
+				 * System.out.println("x=" + a + b + c + d + e + f);
+				 */
+				/*
+				 * int b = Character.getNumericValue(element.charAt(1)); int c =
+				 * Character.getNumericValue(element.charAt(2)); int d =
+				 * Character.getNumericValue(element.charAt(3)); int e =
+				 * Character.getNumericValue(element.charAt(4)); int f =
+				 * Character.getNumericValue(element.charAt(5));
+				 */
+
+				for (int i = 0; i < element.length(); i++) {
+
+				}
+				/*
+				 * if (element.length()==6) { System.out.println("x=" +
+				 * a+b+c+d+e+f); } else if (element.length()==5) {
+				 * System.out.println("x=" + a+b+c+d+e+0); }else if
+				 * (element.length()==4) { System.out.println("x=" + a+b+c+d);
+				 * }else if (element.length()==3) { System.out.println("x=" +
+				 * a+b+c); }else if (element.length()==2) {
+				 * System.out.println("x=" + a+b); }else if
+				 * (element.length()==1) { System.out.println("x=" + a); }
+				 */
 				progressChanged = progress;
+
 			}
 
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
 
 				// TODO Auto-generated method stub
+
 				String tipPercent = String.valueOf(progressChanged);
 				textView.setText("Tip % : " + tipPercent + " %");
+				textView.setTextColor(Color.BLACK);
+				tempTip.setText(tipPercent);
+				// tempTip.setVisibility(View.GONE);
+
 			}
 		});
 
+		// End Seekbar Tip
+
+		// SeekBar People
 		seekNumPeople.setOnTouchListener(new OnTouchListener() {
 
 			@Override
@@ -73,7 +140,10 @@ public class MainActivity extends Activity {
 				if (TextUtils.isEmpty(amount.getText())) {
 					texViewTip.setText("Enter Bill Amount");
 					txtTotal.setText("Enter Bill Amount");
-				}else {
+
+					texViewTip.setTextColor(Color.RED);
+					txtTotal.setTextColor(Color.RED);
+				} else {
 					texViewTip.setText("");
 					txtTotal.setText("");
 				}
@@ -100,11 +170,18 @@ public class MainActivity extends Activity {
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
 				// TODO Auto-generated method stub
+
 				String person = String.valueOf(progressChangedPeople);
+
 				textView1.setText("Number Of People : " + person);
+				textView1.setTextColor(Color.BLACK);
+
 			}
+
 		});
 	}
+
+	// End Seekbar People
 
 	private void initializeVariables() {
 		// TODO Auto-generated method stub
@@ -125,6 +202,7 @@ public class MainActivity extends Activity {
 
 		texViewTip = (TextView) findViewById(R.id.textView3);
 		txtTotal = (TextView) findViewById(R.id.textView4);
+		tempTip = (TextView) findViewById(R.id.textView5);
 
 	}
 
